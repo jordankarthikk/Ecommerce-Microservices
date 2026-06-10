@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: order-service
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/jordankarthikk/configuration.git
+
+server:
+  port: 9090
+
