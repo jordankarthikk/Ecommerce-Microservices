@@ -18,7 +18,8 @@ public class orderConfig {
     public WebClient webClient(){
 
         return WebClient.builder()
-                .baseUrl("http://localhost:2222")
+                .baseUrl("http://product-service:2222")
+//                .baseUrl("http://localhost:2222")
                 .build();
     }
 

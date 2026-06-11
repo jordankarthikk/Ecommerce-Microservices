@@ -12,7 +12,7 @@ public class orderController {
     @Autowired
     private OrderService orderService;
 
-    @Value("${msg}")
+    @Value("${msg:Default Message}")
     public String message;
 
     @GetMapping("/msg")

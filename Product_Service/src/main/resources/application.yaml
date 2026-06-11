@@ -4,15 +4,16 @@ spring:
   boot:
     admin:
       client:
-        url: http://localhost:1111
+        url: http://admin-server:1111
   kafka:
+      bootstrap-servers: kafka:9092
       consumer:
         key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
         value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
         properties:
                spring.json.trusted.packages: "*"
   datasource:
-    url: jdbc:mysql://localhost:3306/ProductService
+    url: jdbc:mysql://mysql:3306/ProductService
     username: root
     password: jordan
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -26,10 +27,11 @@ spring:
 
 server:
   port: 2222
-#eureka:
-#  client:
-#    service-url:
-#      defaultZone: http://localhost:8761/eureka/  ** if its not running in the 8761
+#  ** if its not running in the 8761
+eureka:
+  client:
+    service-url:
+      defaultZone: http://service-registry:8761
 management:
   endpoints:
     web:

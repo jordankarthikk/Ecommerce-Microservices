@@ -1,4 +1,5 @@
 services:
+
   kafka:
     image: apache/kafka:latest
     container_name: kafka
@@ -8,8 +9,59 @@ services:
       KAFKA_NODE_ID: 1
       KAFKA_PROCESS_ROLES: broker,controller
       KAFKA_LISTENERS: PLAINTEXT://:9092,CONTROLLER://:9093
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
       KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT
-      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@localhost:9093
+      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@kafka:9093
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+
+  service-registry:
+    build: ./Service_Registry
+    container_name: service-registry
+    ports:
+      - "8761:8761"
+
+  config-server:
+    build: ./configuration
+    container_name: config-server
+    ports:
+      - "9090:9090"
+    depends_on:
+      - service-registry
+
+  admin-server:
+    build: ./Admin_Server
+    container_name: admin-server
+    ports:
+      - "1111:1111"
+    depends_on:
+      - service-registry
+  mysql:
+    image: mysql:8.4
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: jordan
+    ports:
+      - "3307:3306"
+
+  product-service:
+    build: ./Product_Service
+    container_name: product-service
+    ports:use 
+      - "2222:2222"
+    depends_on:
+      - kafka
+      - config-server
+      - service-registry
+      - mysql
+
+  order-service:
+    build: ./Order_Service
+    container_name: order-service
+    ports:
+      - "3333:3333"
+    depends_on:
+      - kafka
+      - config-server
+      - service-registry
+      - mysql

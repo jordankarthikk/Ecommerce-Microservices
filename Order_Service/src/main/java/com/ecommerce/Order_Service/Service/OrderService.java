@@ -1,8 +1,8 @@
 package com.ecommerce.Order_Service.Service;
 
 
+//import com.ecommerce.Order_Service.feign.ProductFeign;
 import com.ecommerce.common.dto.ProductDTO;
-import com.ecommerce.Order_Service.feign.ProductFeign;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
@@ -13,12 +13,12 @@ import org.springframework.web.reactive.function.client.WebClient;
 public class OrderService {
 
 
-    @Autowired
-    private ProductFeign productFeign;
+//    @Autowired
+//    private ProductFeign productFeign;
 
-    @Autowired
-    private RestTemplate restTemplate;
-
+//    @Autowired
+//    private RestTemplate restTemplate;
+//
     @Autowired
     private WebClient webClient;
 
@@ -26,7 +26,7 @@ public class OrderService {
     private KafkaTemplate<String, ProductDTO> kafkaTemplate;
 
     public String createOrder(Long productId, Integer quantity) {
-        //feign client
+//        feign client
 //        ProductDTO product =
 //                productFeign.getProduct(productId);
 //rest template
@@ -48,8 +48,8 @@ public class OrderService {
         double totalPrice =
                 product.getPrice() * quantity;
 
-        //feign client
-        //productFeign.reduceStock(productId, quantity);
+//        feign client
+//        productFeign.reduceStock(productId, quantity);
 
         //resttemplate
 //        String url2 =
